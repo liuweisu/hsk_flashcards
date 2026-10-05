@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>汉字卡 — HSK Flashcards (HSK 1–6)</title>
+<meta name="description" content="Free HSK 1–6 Chinese flashcards: 4,993 words with pinyin, meaning and an example sentence for every word. Spaced repetition, audio, works offline.">
+<meta name="theme-color" content="#222A31">
+<meta name="color-scheme" content="dark">
+<link rel="canonical" href="https://USERNAME.github.io/REPO/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="汉字卡 — HSK Flashcards (HSK 1–6)">
+<meta property="og:description" content="4,993 HSK words with pinyin, meaning and an example sentence for every one. Spaced repetition, audio, works offline.">
+<meta property="og:url" content="https://USERNAME.github.io/REPO/">
+<meta name="twitter:card" content="summary">
+
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 fill=%22%23222A31%22/%3E%3Cg stroke=%22%233F9C82%22 fill=%22none%22%3E%3Crect x=%2212%22 y=%2212%22 width=%2276%22 height=%2276%22 stroke-width=%224%22 opacity=%22.5%22/%3E%3Cg stroke-width=%223%22 stroke-dasharray=%228 7%22 opacity=%22.85%22%3E%3Cpath d=%22M50 12V88M12 50H88M12 12l76 76M88 12l-76 76%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E">
+<style>
+:root{
+  --slate:#222A31;
+  --slate-deep:#1A2126;
+  --slate-line:#323C44;
+  --paper:#EFEEE8;
+  --paper-edge:#DEDCD2;
+  --ink:#12171B;
+  --ink-soft:#4A545B;
+  --jade:#3F9C82;
+  --jade-dim:#2E7361;
+  --cinnabar:#C0452F;
+  --muted:#8B959C;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --han:"Songti SC","Noto Serif CJK SC","Source Han Serif SC","Noto Serif SC",SimSun,"STSong","PingFang SC","Microsoft YaHei",serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:var(--slate);
+  color:var(--paper);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  display:flex;flex-direction:column;
+  min-height:100dvh;
+}
+button{font-family:inherit;font-size:inherit;color:inherit;background:none;border:none;cursor:pointer}
+:focus-visible{outline:2px solid var(--jade);outline-offset:3px;border-radius:2px}
+
+/* ---------- shell ---------- */
+.topbar{
+  display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+  padding:16px 20px 12px;border-bottom:1px solid var(--slate-line);
+}
+.wordmark{font-family:var(--han);font-size:22px;letter-spacing:.08em;color:var(--paper)}
+.wordmark small{
+  display:block;font-family:var(--sans);font-size:9px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--muted);margin-top:2px;letter-spacing:.2em;
+}
+.topbar-right{margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+
+.chipset{display:flex;gap:4px;background:var(--slate-deep);padding:3px;border-radius:999px;max-width:100%;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
+.chipset::-webkit-scrollbar{display:none}
+.chip{
+  padding:5px 12px;border-radius:999px;font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);white-space:nowrap;transition:color .15s,background .15s;
+}
+.chip[aria-pressed="true"]{background:var(--jade-dim);color:#fff}
+.chip:hover{color:var(--paper)}
+
+/* ---------- stage ---------- */
+.stage{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:22px 18px 8px;gap:18px}
+.meta{
+  display:flex;gap:16px;align-items:center;font-size:10px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--muted);
+}
+.meta b{color:var(--jade);font-weight:600}
+
+.card{
+  position:relative;width:min(520px,100%);background:var(--paper);color:var(--ink);
+  border-radius:3px;padding:34px 26px 26px;text-align:center;cursor:pointer;
+  box-shadow:0 1px 0 var(--paper-edge),0 18px 40px -22px rgba(0,0,0,.8);
+  min-height:330px;display:flex;flex-direction:column;justify-content:center;
+}
+.card:active{transform:translateY(1px)}
+.seal{
+  position:absolute;top:14px;right:14px;width:34px;height:34px;
+  border:1.5px solid var(--cinnabar);color:var(--cinnabar);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--han);font-size:13px;line-height:1.05;letter-spacing:-.02em;
+  opacity:.85;
+}
+.seal span{font-size:9px;font-family:var(--sans);letter-spacing:.04em}
+
+/* 米字格 practice grid — the signature */
+.frame{position:relative;width:186px;height:186px;margin:0 auto}
+.frame svg{position:absolute;inset:0;width:100%;height:100%}
+.frame svg line,.frame svg rect{stroke:var(--jade);fill:none;stroke-width:1}
+.frame svg .guide{stroke-dasharray:5 5;opacity:.42}
+.frame svg .edge{opacity:.3}
+.drawin .guide,.drawin .edge{
+  stroke-dashoffset:0;
+  animation:rule .55s ease-out both;
+}
+@keyframes rule{from{opacity:0;transform:scale(.965)}to{opacity:.4;transform:scale(1)}}
+.frame .han{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:var(--han);font-weight:400;color:var(--ink);
+  font-size:78px;line-height:1;padding:6px;
+}
+.frame .han.long{font-size:52px}
+.frame .han.vlong{font-size:38px}
+.drawin .han{animation:inkin .45s .12s ease-out both}
+@keyframes inkin{from{opacity:0;filter:blur(3px)}to{opacity:1;filter:blur(0)}}
+
+.pinyin{font-size:19px;letter-spacing:.06em;color:var(--jade-dim);margin-top:16px}
+.gloss{font-size:19px;color:var(--ink);margin-top:6px}
+.recall-cue{font-size:26px;line-height:1.35;color:var(--ink);padding:0 8px}
+.recall-hint{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#9AA29F;margin-top:14px}
+
+.divider{height:1px;background:var(--paper-edge);margin:20px 0 16px}
+.example{text-align:left}
+.example .zh{font-family:var(--han);font-size:22px;line-height:1.7;color:var(--ink)}
+.example .py{font-size:13px;color:var(--jade-dim);margin-top:4px;letter-spacing:.02em}
+.example .en{font-size:13px;color:var(--ink-soft);margin-top:3px}
+.speak{
+  display:inline-flex;align-items:center;gap:5px;margin-top:12px;
+  font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);
+  border:1px solid var(--paper-edge);padding:5px 10px;border-radius:999px;
+}
+.speak:hover{border-color:var(--jade);color:var(--jade-dim)}
+.hidden{display:none !important}
+
+/* ---------- grading ---------- */
+.grade{display:flex;gap:8px;width:min(520px,100%)}
+.grade button{
+  flex:1;padding:13px 6px;border:1px solid var(--slate-line);border-radius:3px;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+  transition:border-color .15s,color .15s,background .15s;
+}
+.grade button:hover{color:var(--paper);border-color:var(--muted)}
+.grade button.g-again:hover{border-color:var(--cinnabar);color:#E4907F}
+.grade button.g-easy:hover{border-color:var(--jade);color:var(--jade)}
+.flipbar{width:min(520px,100%);text-align:center}
+.flipbar button{
+  width:100%;padding:13px;border:1px solid var(--jade-dim);border-radius:3px;
+  color:var(--jade);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+}
+.flipbar button:hover{background:var(--jade-dim);color:#fff}
+
+.bar{width:min(520px,100%);height:2px;background:var(--slate-line);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--jade);width:0;transition:width .3s}
+
+.footbar{
+  display:flex;gap:14px;justify-content:center;flex-wrap:wrap;
+  padding:12px 18px 22px;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+}
+.footbar button:hover{color:var(--jade)}
+kbd{
+  font-family:var(--sans);font-size:9px;border:1px solid var(--slate-line);
+  border-radius:2px;padding:1px 4px;color:var(--muted);
+}
+
+/* ---------- browse ---------- */
+.browse{padding:0 18px 40px;max-width:900px;margin:0 auto;width:100%}
+.browse input{
+  width:100%;padding:11px 14px;background:var(--slate-deep);border:1px solid var(--slate-line);
+  border-radius:3px;color:var(--paper);font-size:14px;margin:14px 0;
+}
+.browse input::placeholder{color:var(--muted)}
+.row{display:grid;grid-template-columns:76px 1fr;gap:14px;padding:14px 0;border-bottom:1px solid var(--slate-line)}
+.row .h{font-family:var(--han);font-size:30px;line-height:1.15;color:var(--paper)}
+.row .p{font-size:12px;color:var(--jade);letter-spacing:.04em}
+.row .m{font-size:14px;color:var(--paper)}
+.row .s{font-family:var(--han);font-size:15px;color:var(--muted);margin-top:5px}
+.row .t{font-size:12px;color:var(--ink-soft);color:#7C868D}
+.count{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);padding-top:14px}
+
+.done{text-align:center;padding:40px 20px}
+.done h2{font-family:var(--han);font-size:30px;font-weight:400;margin-bottom:8px}
+.done p{color:var(--muted);font-size:14px}
+
+@media (max-width:560px){
+  .card{padding:28px 18px 22px;min-height:300px}
+  .frame{width:150px;height:150px}
+  .frame .han{font-size:64px}
+  .frame .han.long{font-size:42px}
+  .frame .han.vlong{font-size:31px}
+  .topbar{padding:12px 14px 10px}
+  .chip{padding:5px 9px;font-size:10px}
+  .topbar-right{margin-left:0;width:100%}
+}
+@media (hover:none) and (pointer:coarse){
+  kbd{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none !important;transition:none !important}
+}
+</style>
+</head>
+<body>
+
+<noscript><p style="padding:20px;color:#EFEEE8">This flashcard app needs JavaScript enabled.</p></noscript>
+<div class="topbar">
+  <div class="wordmark">汉字卡<small>HSK flashcards</small></div>
+  <div class="topbar-right">
+    <div class="chipset" id="levels" role="group" aria-label="HSK level"></div>
+    <div class="chipset" role="group" aria-label="Direction">
+      <button class="chip" id="dirRec" aria-pressed="true">汉 → EN</button>
+      <button class="chip" id="dirRcl" aria-pressed="false">EN → 汉</button>
+    </div>
+    <div class="chipset">
+      <button class="chip" id="tabStudy" aria-pressed="true">Study</button>
+      <button class="chip" id="tabList" aria-pressed="false">Word list</button>
+    </div>
+  </div>
+</div>
+
+<div id="studyView" style="flex:1;display:flex;flex-direction:column">
+  <div class="stage">
+    <div class="meta">
+      <span id="mQueue">— left</span>
+      <span id="mSeen">0 reviewed</span>
+      <span>streak <b id="mStreak">0</b></span>
+    </div>
+
+    <div class="card" id="card" role="button" tabindex="0" aria-label="Flashcard, activate to reveal the answer">
+      <div class="seal" id="seal"></div>
+
+      <div id="faceRec">
+        <div class="frame drawin" id="frame">
+          <svg viewBox="0 0 100 100" aria-hidden="true">
+            <rect class="edge" x="1" y="1" width="98" height="98"></rect>
+            <line class="guide" x1="50" y1="1" x2="50" y2="99"></line>
+            <line class="guide" x1="1" y1="50" x2="99" y2="50"></line>
+            <line class="guide" x1="1" y1="1" x2="99" y2="99"></line>
+            <line class="guide" x1="99" y1="1" x2="1" y2="99"></line>
+          </svg>
+          <div class="han" id="han"></div>
+        </div>
+        <div class="pinyin hidden" id="pinyin"></div>
+      </div>
+
+      <div id="faceRcl" class="hidden">
+        <div class="recall-cue" id="cue"></div>
+        <div class="recall-hint">Say it out loud, then reveal</div>
+      </div>
+
+      <div id="answer" class="hidden">
+        <div class="gloss" id="gloss"></div>
+        <div class="divider"></div>
+        <div class="example">
+          <div class="zh" id="exZh"></div>
+          <div class="py" id="exPy"></div>
+          <div class="en" id="exEn"></div>
+        </div>
+        <button class="speak" id="btnSpeak" type="button">▶ Hear it</button>
+      </div>
+    </div>
+
+    <div class="bar"><i id="bar"></i></div>
+
+    <div class="flipbar" id="flipbar">
+      <button id="btnFlip">Reveal answer <kbd>space</kbd></button>
+    </div>
+    <div class="grade hidden" id="gradebar">
+      <button class="g-again" data-g="0">Again<br><kbd>1</kbd></button>
+      <button data-g="1">Hard<br><kbd>2</kbd></button>
+      <button data-g="2">Good<br><kbd>3</kbd></button>
+      <button class="g-easy" data-g="3">Easy<br><kbd>4</kbd></button>
+    </div>
+  </div>
+
+  <div class="footbar">
+    <button id="btnShuffle">Shuffle deck</button>
+    <button id="btnReset">Reset progress</button>
+    <span id="saveNote"></span>
+  </div>
+</div>
+
+<div id="listView" class="browse hidden">
+  <input id="search" type="search" placeholder="Search character, pinyin or meaning…" aria-label="Search words">
+  <div class="count" id="listCount"></div>
+  <div id="listBody"></div>
+</div>
+
+<script src="vocab.js"></script>
+<script>
+const VOCAB = Array.isArray(window.VOCAB) ? window.VOCAB : [];
+
+/* ---------- state ---------- */
+const state = {
+  level:'all', dir:'rec', flipped:false,
+  queue:[], current:null, seen:0, streak:0, best:{},
+};
+const $ = id => document.getElementById(id);
+
+/* ---------- storage: localStorage, degrades to memory ---------- */
+const KEY='hsk-progress-v1';
+let canStore = (() => {
+  try { const k='__t'; localStorage.setItem(k,'1'); localStorage.removeItem(k); return true; }
+  catch(e){ return false; }   // private mode, blocked cookies, file:// on some browsers
+})();
+function save(){
+  if(!canStore) return;
+  try{
+    localStorage.setItem(KEY, JSON.stringify({
+      best: state.best, seen: state.seen, level: state.level, dir: state.dir
+    }));
+  }catch(e){ canStore=false; $('saveNote').textContent='progress not saved'; }
+}
+function load(){
+  if(!canStore){ $('saveNote').textContent='session only'; return; }
+  try{
+    const raw = localStorage.getItem(KEY);
+    if(raw){
+      const d = JSON.parse(raw);
+      state.best = d.best || {};
+      state.seen = d.seen || 0;
+      if(d.level) state.level = d.level;
+      if(d.dir) state.dir = d.dir;
+    }
+  }catch(e){}
+  $('saveNote').textContent='progress saved in this browser';
+}
+
+/* ---------- deck ---------- */
+function pool(){
+  return VOCAB.filter(w => state.level==='all' || w.l===+state.level);
+}
+function buildQueue(){
+  const p = pool().slice();
+  // words you've struggled with come first, then unseen, then known
+  p.sort((a,b)=>{
+    const sa = state.best[a.h]??-1, sb = state.best[b.h]??-1;
+    if(sa!==sb) return sa-sb;
+    return Math.random()-0.5;
+  });
+  state.queue = p;
+  next();
+}
+function shuffle(){
+  state.queue = pool().slice().sort(()=>Math.random()-0.5);
+  next();
+}
+function next(){
+  state.flipped=false;
+  const wasDone = !state.current && $('card').querySelector('.done');
+  state.current = state.queue.shift() || null;
+  if(state.current && $('card').querySelector('.done')) $('card').innerHTML = CARD_HTML;
+  render();
+}
+
+/* ---------- render ---------- */
+function sizeClass(s){ return s.length>=4 ? 'vlong' : (s.length>=3 ? 'long' : ''); }
+const CARD_HTML = $('card').innerHTML;
+function render(){
+  const w = state.current;
+  if(!w){
+    $('card').innerHTML = '<div class="done"><h2>做得好</h2><p>Deck finished. Shuffle to run through it again.</p></div>';
+    $('flipbar').classList.add('hidden'); $('gradebar').classList.add('hidden');
+    return;
+  }
+  $('seal').innerHTML = 'HSK<br><span>'+w.l+'</span>';
+  const rec = state.dir==='rec';
+  $('faceRec').classList.toggle('hidden', !rec);
+  $('faceRcl').classList.toggle('hidden', rec);
+
+  $('han').textContent = w.h;
+  $('han').className = 'han '+sizeClass(w.h);
+  $('pinyin').textContent = w.p;
+  $('cue').textContent = w.m;
+  $('gloss').innerHTML = rec ? w.m : '<span style="font-family:var(--han);font-size:34px">'+w.h+'</span><div class="pinyin" style="margin-top:6px">'+w.p+'</div>';
+  $('exZh').textContent = w.s;
+  $('exPy').textContent = w.sp;
+  $('exEn').textContent = w.st;
+
+  $('pinyin').classList.toggle('hidden', !state.flipped);
+  $('answer').classList.toggle('hidden', !state.flipped);
+  $('flipbar').classList.toggle('hidden', state.flipped);
+  $('gradebar').classList.toggle('hidden', !state.flipped);
+
+  const f=$('frame'); if(f){ f.classList.remove('drawin'); void f.offsetWidth; f.classList.add('drawin'); }
+
+  const total = pool().length;
+  $('mQueue').textContent = (state.queue.length+1)+' left';
+  $('mSeen').textContent = state.seen+' reviewed';
+  $('mStreak').textContent = state.streak;
+  $('bar').style.width = (100*(total-state.queue.length-1)/Math.max(total,1))+'%';
+}
+function flip(){ if(!state.current) return; state.flipped=true; render(); }
+
+function grade(g){
+  const w = state.current; if(!w) return;
+  state.best[w.h] = g;
+  state.seen++;
+  state.streak = g===0 ? 0 : state.streak+1;
+  if(g===0) state.queue.splice(Math.min(3,state.queue.length),0,w);        // very soon
+  else if(g===1) state.queue.splice(Math.min(9,state.queue.length),0,w);   // soon
+  else if(g===2) state.queue.splice(Math.min(40,state.queue.length),0,w);  // later
+  save();
+  next();
+}
+
+/* ---------- audio ---------- */
+function speak(text){
+  if(!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang='zh-CN'; u.rate=0.85;
+  const v = speechSynthesis.getVoices().find(v=>/zh|Chinese/i.test(v.lang+v.name));
+  if(v) u.voice=v;
+  speechSynthesis.speak(u);
+}
+
+/* ---------- word list ---------- */
+function renderList(q=''){
+  const t = q.trim().toLowerCase();
+  const rows = pool().filter(w => !t ||
+    w.h.includes(t) || w.p.toLowerCase().includes(t) || w.m.toLowerCase().includes(t));
+  const cap = 300, shown = rows.slice(0, cap);
+  $('listCount').textContent = rows.length+' words'+(rows.length>cap?' — showing first '+cap+', search to narrow':'');
+  $('listBody').innerHTML = shown.map(w =>
+    '<div class="row"><div class="h">'+w.h+'<div class="p">'+w.p+'</div></div>'+
+    '<div><div class="m">'+w.m+'</div><div class="s">'+w.s+'</div>'+
+    '<div class="t">'+w.sp+' — '+w.st+'</div></div></div>').join('');
+}
+
+/* ---------- wiring ---------- */
+const levels = [['all','All'],['1','HSK 1'],['2','HSK 2'],['3','HSK 3'],['4','HSK 4'],['5','HSK 5'],['6','HSK 6']];
+$('levels').innerHTML = levels.map(([v,l]) =>
+  '<button class="chip" data-lv="'+v+'" aria-pressed="'+(v==='all')+'">'+l+'</button>').join('');
+$('levels').addEventListener('click', e=>{
+  const b = e.target.closest('[data-lv]'); if(!b) return;
+  state.level = b.dataset.lv;
+  [...$('levels').children].forEach(c=>c.setAttribute('aria-pressed', c===b));
+  save();
+  buildQueue(); renderList($('search').value);
+});
+function setDir(d){
+  state.dir=d;
+  $('dirRec').setAttribute('aria-pressed', d==='rec');
+  $('dirRcl').setAttribute('aria-pressed', d==='rcl');
+  save();
+  render();
+}
+$('dirRec').onclick=()=>setDir('rec');
+$('dirRcl').onclick=()=>setDir('rcl');
+
+function setTab(study){
+  $('studyView').classList.toggle('hidden', !study);
+  $('listView').classList.toggle('hidden', study);
+  $('tabStudy').setAttribute('aria-pressed', study);
+  $('tabList').setAttribute('aria-pressed', !study);
+  if(!study) renderList($('search').value);
+}
+$('tabStudy').onclick=()=>setTab(true);
+$('tabList').onclick=()=>setTab(false);
+
+$('card').addEventListener('click', e=>{ if(e.target.id==='btnSpeak') return; flip(); });
+$('card').addEventListener('keydown', e=>{ if(e.key==='Enter') flip(); });
+$('btnFlip').onclick=e=>{e.stopPropagation();flip();};
+document.addEventListener('click', e=>{
+  if(e.target.id==='btnSpeak' && state.current){ e.stopPropagation(); speak(state.current.h+'。'+state.current.s); }
+});
+$('gradebar').addEventListener('click', e=>{
+  const b=e.target.closest('[data-g]'); if(b) grade(+b.dataset.g);
+});
+$('btnShuffle').onclick=shuffle;
+$('btnReset').onclick=()=>{
+  if(!confirm('Reset all progress? This cannot be undone.')) return;
+  state.best={}; state.seen=0; state.streak=0;
+  if(canStore){ try{ localStorage.removeItem(KEY); }catch(e){} }
+  buildQueue();
+};
+$('search').addEventListener('input', e=>renderList(e.target.value));
+
+document.addEventListener('keydown', e=>{
+  if(e.target.tagName==='INPUT') return;
+  if(e.code==='Space'){ e.preventDefault(); state.flipped?grade(2):flip(); }
+  else if(['1','2','3','4'].includes(e.key) && state.flipped) grade(+e.key-1);
+  else if(e.key==='s' && state.current){ speak(state.current.h); }
+});
+
+load();
+// reflect restored level / direction in the UI
+[...$('levels').children].forEach(c => c.setAttribute('aria-pressed', c.dataset.lv === state.level));
+$('dirRec').setAttribute('aria-pressed', state.dir === 'rec');
+$('dirRcl').setAttribute('aria-pressed', state.dir === 'rcl');
+buildQueue();
+
+// offline support
+if('serviceWorker' in navigator && location.protocol.startsWith('http')){
+  addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(()=>{}));
+}
+</script>
+</body>
+</html>
